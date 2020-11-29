@@ -18,9 +18,22 @@ describe('Create Universities Controller', () => {
       body: {}
     }
 
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toEqual(400)
-    expect(httpResponse.body.errorFields).toEqual(['name'])
-    expect(httpResponse.body.errorDetail).toEqual({ name: ['any.required'] })
+    const { statusCode, body } = await sut.handle(httpRequest)
+    expect(statusCode).toEqual(400)
+    expect(body.errors[0].key).toEqual('name')
+    expect(body.errors[0].message).toEqual('"name" is required')
+  })
+
+  test('Should return 400 if no fullName is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: { name: 'any_name' }
+    }
+
+    const { statusCode, body } = await sut.handle(httpRequest)
+    expect(statusCode).toEqual(400)
+    expect(body.errors[0].key).toEqual('fullName')
+    expect(body.errors[0].message).toEqual('"fullName" is required')
   })
 })

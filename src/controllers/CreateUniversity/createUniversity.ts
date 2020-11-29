@@ -6,19 +6,23 @@ import { IUniversityModel } from '../../model/university'
 
 export class CreateUniversityController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const university: IUniversityModel = { name: httpRequest.body.name }
-    const resultValidate = await new UniversityValidator().validateBody(university)
+    const university: IUniversityModel = {
+      name: httpRequest.body.name,
+      fullName: httpRequest.body.fullName
+    }
 
+    const resultValidate = await new UniversityValidator().validateBody(university)
+    console.log(resultValidate)
     if (resultValidate.isValid) {
-      return new Promise(resolve => resolve({
+      return {
         statusCode: 200,
-        body: { resultValidate }
-      }))
+        body: { }
+      }
     } else {
-      return new Promise(resolve => resolve({
+      return {
         statusCode: 400,
-        body: resultValidate.data
-      }))
+        body: { errors: resultValidate.errors }
+      }
     }
   }
 }
