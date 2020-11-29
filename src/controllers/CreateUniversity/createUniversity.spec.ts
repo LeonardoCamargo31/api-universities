@@ -69,4 +69,20 @@ describe('Create Universities Controller', () => {
     expect(body.errors[0].key).toEqual('uf')
     expect(body.errors[0].message).toEqual('"uf" is required')
   })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        fullName: 'any_fullName',
+        city: 'any_city',
+        uf: 'uf'
+      }
+    }
+
+    const { statusCode } = await sut.handle(httpRequest)
+    expect(statusCode).toEqual(200)
+  })
 })

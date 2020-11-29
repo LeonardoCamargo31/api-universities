@@ -27,8 +27,8 @@ export class UniversityValidator implements IValidator {
 }
 
 const universitySchema = Joi.object().keys({
-  name: Joi.string().trim().required(),
-  fullName: Joi.string().trim().required(),
-  city: Joi.string().trim().required(),
-  uf: Joi.string().trim().required()
+  name: Joi.string().max(20).trim().required(),
+  fullName: Joi.string().max(100).trim().required(),
+  city: Joi.string().max(40).trim().required(),
+  uf: Joi.string().min(2).max(2).trim().required()
 })
