@@ -3,7 +3,8 @@ import { IValidator } from '../protocols/validator'
 
 export class UniversityValidator implements IValidator {
   async validateBody (body: any): Promise<any> {
-    const result = await universitySchema.validate({ name: body.name })
+    const { name, fullName, city, uf } = body
+    const result = await universitySchema.validate({ name, fullName, city, uf })
 
     if (result.error) {
       const errors = []
@@ -27,5 +28,7 @@ export class UniversityValidator implements IValidator {
 
 const universitySchema = Joi.object().keys({
   name: Joi.string().trim().required(),
-  fullName: Joi.string().trim().required()
+  fullName: Joi.string().trim().required(),
+  city: Joi.string().trim().required(),
+  uf: Joi.string().trim().required()
 })

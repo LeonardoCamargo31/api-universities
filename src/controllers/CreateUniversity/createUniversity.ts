@@ -8,11 +8,12 @@ export class CreateUniversityController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const university: IUniversityModel = {
       name: httpRequest.body.name,
-      fullName: httpRequest.body.fullName
+      fullName: httpRequest.body.fullName,
+      city: httpRequest.body.city,
+      uf: httpRequest.body.uf
     }
 
     const resultValidate = await new UniversityValidator().validateBody(university)
-    console.log(resultValidate)
     if (resultValidate.isValid) {
       return {
         statusCode: 200,
